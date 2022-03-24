@@ -1,0 +1,6 @@
+tests/* -text
+tests_data/* -text
+tests_src/* text
+.gitignore text
+.gitattributes text
+README.md text

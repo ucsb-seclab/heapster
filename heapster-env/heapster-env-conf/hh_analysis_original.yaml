@@ -1,0 +1,65 @@
+# Heap analysis configuration file
+# This file must be put in the hb_analysis folder of the firmware under analysis
+# Use global config as base
+global_config: ./analysis.yaml
+hb_state: <HB_STATE_PATH>
+
+#############################
+#    analysis settings      #
+#############################
+# The allocator is implemented in the firmware itself
+allocator: <ALLOCATOR_PATH>
+# The blob is also exposed to the binary as the libc
+libc: <LIBC_PATH>
+# Specify stdin should be pre-constrained
+input_pre_constraint: False
+# Specify stdin value-range (any, ascii, printable, alphanumeric, letters, zero-bytes)
+input_values: any
+# Specify a chunk's header size (not including any user_data overlap)
+header_size: <HEADER_SIZE>
+# Specify the offset between the user's memory and the start of the chunk
+mem2chunk_offset: <MEM2CHUNK_OFFSET_SIZE>
+# Chunk fill size (number of byte read into each chunk when allocated): zero, header_size, chunk_size, <numeric value in bytes>
+chunk_fill_size: zero
+# Specify vulnerabilities to detect: arbitrary write, allocations over already allocated memory, allocations over non-
+# heap-memory, freeing of fake chunks
+vulns: <VULN_LIST>
+# Specify the overflow sizes starting from prev_size
+overflow_sizes: [0x8]
+
+#########################################
+#        concretization strategies      #
+#########################################
+# Configuration for reading concretization strategy
+read_concr_ss_sols: 16
+read_concr_sc_sols: 100
+read_concr_se_sols: 100
+# Configuration for writes concretization strategy
+write_concr_ss_sols: 16
+write_concr_sc_sols: 100
+write_concr_se_sols: 100
+
+#############################
+#     malloc settings       #
+#############################
+malloc_addr: <MALLOC_ADDR>
+# The malloc prototype description
+malloc_prototype: <MALLOC_PROTOTYPE_DICT>
+# Malloc unknown arg. Ideally this set will be retrieved automatically by Slimer. 
+malloc_unk_args: <MALLOC_UNK_ARGS_DICT>
+# The malloc prototype string (used for poc generation)
+malloc_prototype_string: <MALLOC_PROTOTYPE_STRING>
+# Specify the distinct malloc sizes; run identify_libc to identify the libc-binsizes
+malloc_sizes: [0x8, 0x10, 0x20]
+
+#############################
+#       free settings       #
+#############################
+# TODO: move this in the hb_state JSON
+free_addr: <FREE_ADDR>
+# The free prototype description
+free_prototype: <FREE_PROTOTYPE_DICT>
+# Free unknown arg. Ideally this set will be retrieved automatically by Slimer. 
+free_unk_args: <FREE_UNK_ARGS_DICT>
+# The free prototype string (used for poc generation)
+free_prototype_string: <FREE_PROTOTYPE_STRING>

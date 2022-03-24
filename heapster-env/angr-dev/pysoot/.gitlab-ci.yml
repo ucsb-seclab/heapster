@@ -1,0 +1,11 @@
+before_script:
+  - which angr-test && angr-test sync hard
+
+### local
+pysoot:
+  script: "angr-test pysoot"
+  tags: [angr]
+
+lint:
+  script: "angr-test lint"
+  tags: [angr]

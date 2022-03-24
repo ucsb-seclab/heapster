@@ -1,0 +1,89 @@
+# Heap analysis global base configuration file
+
+#############################
+#     global settings       #
+#############################
+# path to the heapster state JSON
+# This is being used both during generation of POCs tailored to this specific blob
+# and during tracing to extract information about the heapster.
+hb_state: <HB_STATE_PATH>
+# Where to dump results of the analysis
+hb_logfile: <HB_LOGFILE>
+# loader is just `autoblob`. As for now just a placeholder, not really used.
+loader: 'autoblob'
+allocator: 'autoblob'
+libc: 'autoblob'
+# Yes/No descriptions
+store_desc: True
+mcheck: False
+# Log output 
+log_level: INFO
+
+
+#############################
+#     zoo-gen settings      #
+#############################
+# Create files or just show the amount of permutations
+create_files: True
+# Specify the write_target's size in qwords (controlled memory where you want to write to for arb. write)
+wtarget_size: 0x10
+# Symbolic bytes in sim_data used for fake_free, etc... (default: 0x20)
+sym_data_size: 0x20
+# FD for memory corruptions:
+mem_corruption_fd: 3
+# Specify the number of actions in one zoo case
+zoo_depth: <ZOO_DEPTH>
+# Specify the zoo actions out of (malloc, free, overflow, uaf, fake_free, double_free, single_bitflip, arb_relative_write)
+# Syntax: action:count (count sets the max. occurrences of the action per binary, -1 means zoo_depth)
+zoo_actions: {malloc: -1, free: -1, overflow: <OVERFLOW>, fake_free: <FAKE_FREE>, double_free: <DOUBLE_FREE>, arb_relative_write: <ARB_RELATIVE_WRITE>, single_bitflip: <SINGLE_BITFLIP>, uaf: <UAF>}
+# Specify the location to store your zoo
+zoo_dir: <BLOB_ZOO_DIR>
+
+#############################
+#    memory performance     #
+#############################
+# Set Memory limiter (Makes sure you don't run out of memory. Highly recommended!)
+use_mem_limiter: True
+# Set the memory limit in GB
+mem_limit: 30
+# Set spiller (spill states to disk in order to save memory)
+spiller: False
+spiller_conf: {min: 1, max: 2, staging_min: 1, staging_max: 2}
+# Specify if states should be split on allocations sizes or "ored" instead:
+state_split_sizes: False
+# Drop errored states (e.g. SegFaults)
+drop_errored: True
+# Enabling timeout
+timeout: True
+# Max number of states to avoid state explosions
+max_states: 500
+# By default we run the symbolic tracing for 30 mins
+max_sec: 1800 
+# Use loopseer
+loopseer: True
+# MAX iterations for loops
+loopser_max_iterations: 1000
+
+#############################
+#    solver performance     #
+#############################
+# Set DFS (depth-first explorations)
+use_dfs: True
+# Set VSA (value-set analysis)
+use_vsa: False
+# Set Veritesting (DSE+SSE)
+use_veritesting: False
+# Stop exploration as soon as a vuln state is found. Do not explore the whole space!
+stop_found: True
+# Stop found for fake_frees, exploration is pretty expensive on those
+filter_fake_frees: True
+# Set Concretizer (Tries to concretize symbolic values asap)
+use_concretizer: False
+
+#############################
+#    pocs-gen settings      #
+#############################
+# Define where to store the proof-of-concept c-files
+pocs_path: <POCS_PATH>
+# Results may contain symbolic values which allow for multiple solutions, specify how many solutions you want to get
+num_results: 1

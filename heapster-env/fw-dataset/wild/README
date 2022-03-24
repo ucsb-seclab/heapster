@@ -1,0 +1,8 @@
+As this dataset is huge, it is not part of the container.
+We can download on-demand the sample whenever we start an analysis, place them here or use the script.
+
+- tested.txt contains the list of names of monolithic firmware images tested with heapster (799 as reported in the paper).
+- You can use get-fw.py script to get a firmware image from https://github.com/ucsb-seclab/monolithic-firmware-collection/.
+  When using this script, the load_conf is also downloaded if the firmware is part of the fw-tested.txt, otherwise, you
+  need to write one yourself! This condif is essential to properly instruct angr when loading the firmware.
+- If you want the entire wild dataset you can use the script get-all.py to download ALL the samples with their respective loading conf.

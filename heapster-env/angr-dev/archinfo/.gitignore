@@ -1,0 +1,7 @@
+*.pyc
+*.swp
+*.egg-info
+dist
+MANIFEST
+Pipfile
+Pipfile.lock

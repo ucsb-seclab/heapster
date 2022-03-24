@@ -1,0 +1,9 @@
+*.idb
+*.i64
+*.fcfg
+*.id0
+*.id1
+*.id2
+*.nam
+*.til
+.DS_Store

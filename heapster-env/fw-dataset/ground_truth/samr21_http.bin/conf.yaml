@@ -1,0 +1,88 @@
+#################
+# LOADING OPTIONS
+#################
+
+# Architecture of the firmware
+arch: ARMCortexM
+
+# Base address to be used to load the 
+# firmware.
+# DEFAULT: 0x0
+base-address: 0x0
+
+# Entry point of the firmware. This usually
+# corresponds to the ResetHandler of the blob.
+# DEFAULT: 0x0
+entry-point: 0x2215
+
+# Offset to IVT if exists. 
+# For instance Texas Instrument
+# blobs have a custom header and the IVT does not appear 
+# at 0x0.
+# DEFAULT: 0x0
+has-ivt: true
+offset-ivt: 0x0
+
+# Initial value of the stack pointer.
+# DEFAULT: 0x0
+stack-pointer: 0x0
+
+# OPTIONAL
+# List of memory ranges in which we have RAM.
+# e.g., [[region_name, start_addr, end_addr, path_to_ramdisk]]
+# If the path to ramdisk is empty we'll plug a 
+# emtpy memory backend, otherwise, memory is going to
+# be backed by that file.
+ram-regions: [[ram, 0x1fff0000, 0x30000000, '']]
+
+# OPTIONAL
+# List of memory ranges in which the perihperals memory
+# lives.
+# e.g., [[region_name, start_addr, end_addr, path_to_ramdisk]]
+# If the path to ramdisk is empty we'll plug a 
+# emtpy memory backend, otherwise memory is going to
+# be filled with that.
+mmio-regions: [[mmio, 0x40000000, 0x50000000, '']]
+
+# OPTIONAL
+# List of memory ranges in which the system control block
+# lives.
+# e.g., [[region_name, start_addr, end_addr, path_to_ramdisk]]
+# If the path to ramdisk is empty we'll plug a 
+# emtpy memory backend, otherwise memory is going to
+# be filled with that.
+scb-regions: []
+
+# OPTIONAL
+# Extra region.
+# List of extra regions to be mapped if any.
+# e.g., [["missing_regions", addr1, addr2, path_to_ramdisk], [], ...]
+# We'll map blank region there. Behavior up to the user.
+extra-regions: []
+
+# OPTIONAL
+# Memory range in which the dynamic memory lives
+# (i.e., heap).
+heap-region: [[0x1fff0000, 0x30000000]]
+
+##############
+# CFG OPTIONS
+##############
+
+# Wether we want to recursively start to disassemble
+# from the entry point
+start-at-entry: true
+
+# Wether we should also scan for function prologues
+# when looking for functions.
+function-prologues: true
+
+# Wether we build the CFG considering only the ROM
+# addresses.
+only-rom: true
+
+complete-calling-convention: false
+
+# Shall we dump functions after we built the 
+# CFG.
+dump-funcs: true

@@ -1,0 +1,66 @@
+# Heap analysis configuration file
+# This file must be put in the hb_analysis folder of the firmware under analysis
+# Use global config as base
+global_config: ./analysis.yaml
+hb_state: '/home/degrigis/projects/hbusters_firmware/arm_firmware_seclab/csaw_esc19_csa/hb_analysis/hb_state.json'
+
+#############################
+#    analysis settings      #
+#############################
+# The allocator is implemented in the firmware itself
+allocator: '/home/degrigis/projects/hbusters_firmware/arm_firmware_seclab/csaw_esc19_csa/csaw_esc19_csa.bin'
+# The blob is also exposed to the binary as the libc
+libc: '/home/degrigis/projects/hbusters_firmware/arm_firmware_seclab/csaw_esc19_csa/csaw_esc19_csa.bin'
+# Specify stdin should be pre-constrained
+input_pre_constraint: False
+# Specify stdin value-range (any, ascii, printable, alphanumeric, letters, zero-bytes)
+input_values: any
+# Specify a chunk's header size (not including any user_data overlap)
+header_size: 4
+# Specify the offset between the user's memory and the start of the chunk
+mem2chunk_offset: 4
+# Chunk fill size (number of byte read into each chunk when allocated): zero, header_size, chunk_size, <numeric value in bytes>
+chunk_fill_size: zero
+# Specify vulnerabilities to detect: arbitrary write, allocations over already allocated memory, allocations over non-
+# heap-memory, freeing of fake chunks
+vulns: <VULN_LIST>
+# Specify the overflow sizes starting from prev_size
+overflow_sizes: [0x8]
+
+#########################################
+#        concretization strategies      #
+#########################################
+# Configuration for reading concretization strategy
+read_concr_ss_sols: 16
+read_concr_sc_sols: 100
+read_concr_se_sols: 100
+# Configuration for writes concretization strategy
+write_concr_ss_sols: 16
+write_concr_sc_sols: 100
+write_concr_se_sols: 100
+
+#############################
+#     malloc settings       #
+#############################
+malloc_addr: 0x68a1
+# The malloc prototype description
+malloc_prototype: {ret: 'r0', arg_0: 'arg_0', arg_1: 'size'}
+# Malloc unknown arg. Ideally this set will be retrieved automatically by Slimer. 
+malloc_unk_args: {arg_0: [0x1FFF8EF0] } 
+# The malloc prototype string (used for poc generation)
+malloc_prototype_string: 'unsigned int * malloc(size_t arg_0,int size)'
+# Specify the distinct malloc sizes; run identify_libc to identify the libc-binsizes
+malloc_sizes: [0x8, 0x10, 0x20]
+
+#############################
+#       free settings       #
+#############################
+# The free address spotted in the blob by spengler-venkman-stantz-barret
+# TODO: move this in the hb_state JSON
+free_addr: 0x76d1
+# The free prototype description
+free_prototype: {arg_0: 'arg_0', arg_1: 'ptr_to_free'}
+# Free unknown arg. Ideally this set will be retrieved automatically by Slimer. 
+free_unk_args: {arg_0: [0x1FFF8EF0] } 
+# The free prototype string (used for poc generation)
+free_prototype_string: 'void free(size_t arg_0, unsigned int * ptr_to_free)'
