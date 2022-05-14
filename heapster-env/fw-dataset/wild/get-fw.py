@@ -10,7 +10,7 @@ WILD_FW_FOLDER = "./"
 
 # PLEASE READ THE README BEFORE! :)
 # 
-# YOU CAN FEED THESE KIND OF LINK TO THE SCRIPT IF THE FIRMWARE IS HOSTED SOMEWHERE 
+# FEED THESE KIND OF URL TO THE SCRIPT
 # https://github.com/ucsb-seclab/monolithic-firmware-collection/blob/master/ARMCortex-M/D_FIRMXRAYS/nordic/105_V2.1.3_20170828.bin@5bee5a33aebff656bbf1d1f46865b382?raw=true
 # Usage:
 #       python get-fw.py <FIRMWARE_BIN_URI>
