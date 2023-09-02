@@ -1,8 +1,8 @@
-FROM ubuntu:18.04
+FROM ubuntu:22.04
 
 RUN apt-get update && apt-get install -y htop screen git vim parallel nano\ 
                                          wget cmake python3-pip ranger zsh zplug wget\
-                                         graphviz libgraphviz-dev gcc-arm*
+                                         graphviz libgraphviz-dev gcc-arm* libffi-dev
 
 RUN mkdir /root/heapster
 
